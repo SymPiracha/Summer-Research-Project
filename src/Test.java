@@ -3,50 +3,35 @@ import java.awt.*;
 
 public class Test {
 		
-		//Tut 2
-		
 		private JFrame f; //frame is like a window
-		private JPanel p;
-		private JButton b1;
-		private JLabel lab;
 		
 		public Test() {
 			
-			gui();
-			
-		}
-		
-		public void gui() {
 			f = new JFrame("name of Jframe");
+			
+//			JButton b1,b2, b3, b4,b5;		
+//			b1 = new JButton("Button 1");
+//			f.add(b1);
+
+			JButton b;
+			
+			for (int i = 1 ; i<=6 ; i++) {
+				b = new JButton("Button " + i);
+				f.add(b);
+			}
+			
+			f.setLayout(new GridLayout(2,3));
+			
 			f.setVisible(true);
 			f.setSize(600,400);
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
-			p = new JPanel();
-			p.setBackground(Color.CYAN);
-			
-			b1 = new JButton("Test Button");
-			lab = new JLabel("This is a test label");
-			
-			p.add(b1);
-			p.add(lab);
-			
-			f.add(p);
-			
-			
+
 		}
 		
-		public static void main (String [] args) {
 		
-			//Tut 1
-			
-			/*Simulator s = new Simulator();
-			s.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			s.setSize(275,180);
-			s.setVisible(true);*/
-			
-			//Tut 2
-			
+		public static void main (String [] args) {
+	
 			new Test();
 			
 		}
