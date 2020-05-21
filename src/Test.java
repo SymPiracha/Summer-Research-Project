@@ -17,7 +17,7 @@ public class Test {
 		}
 		
 		public void gui() {
-			f = new JFrame("name pf Jframe");
+			f = new JFrame("name of Jframe");
 			f.setVisible(true);
 			f.setSize(600,400);
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,7 +25,7 @@ public class Test {
 			p = new JPanel();
 			p.setBackground(Color.CYAN);
 			
-			b1 = new JButton("Test");
+			b1 = new JButton("Test Button");
 			lab = new JLabel("This is a test label");
 			
 			p.add(b1);
