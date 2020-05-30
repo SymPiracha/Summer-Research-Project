@@ -1,3 +1,7 @@
+//Weights of Hidden units are determined by trial/error and intuition 
+
+//(Excel Spreadsheet for visualization of how this works)
+
 public class PerceptronProgrammable {
     double inputs[]        = {2,2,0,0};
     double hiddenUnits[][] = {
@@ -18,25 +22,26 @@ public class PerceptronProgrammable {
                 sum += inputs[i] * hiddenUnits[j][i];
             }
             outputs[j] = sum;
+            
         }
     }
 
     void printResult() {
         double maxScore=outputs[0];
-        int maxPos=0;
+        int maxIndex=0;
         int i;
 
-        // max score
+        // max score and position
         for(i=1;i<outputs.length;i++) {
             if (outputs[i] > maxScore) {
                 maxScore = outputs[i];
-                maxPos = i;
+                maxIndex = i;
             }
         }
 
         // display results
-        System.out.printf("\nMax Score = %f  (%s)\n\n", outputs[maxPos],conclusions[maxPos]);
+        System.out.printf("\nMax Score = %f  (%s)\n\n", outputs[maxIndex],conclusions[maxIndex]);
         for(i=0;i<outputs.length;i++)
-            System.out.printf("Score = %10.2f  Conclusion = %s\n",outputs[i],conclusions[i]);
+            System.out.printf("Output %d: %s, = %10.2f\n",i,conclusions[i],outputs[i]);
     }
 }

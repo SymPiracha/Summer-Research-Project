@@ -1,3 +1,7 @@
+//Back propagation added which adjusts the weights of nodes.
+
+//(Excel Spreadsheet for visualization of how this works)
+
 public class PerceptronLearning {
     double inputs[]        = {2,2,0,0};
     double hiddenUnits[][] = {
@@ -33,6 +37,7 @@ public class PerceptronLearning {
                 sum += inputs[i] * hiddenUnits[j][i];
             }
             outputs[j] = sum;
+            //System.out.println(sum);
         }
     }
 
@@ -47,7 +52,6 @@ public class PerceptronLearning {
                 maxPos = i;
             }
         }
-
     }
 
     void printResult() {
@@ -64,20 +68,20 @@ public class PerceptronLearning {
 
     void backPropagation() {
         int i, j, k;
-        double sum;
+        double sumOfWeights; //sum for one "column"
 
-        // calculate the error
+        // calculate the error (expected - actual output)
 
         for(i=0;i<outputs.length;i++) error[i] = expected[i]-outputs[i];
 
         // calculate back propagation increase/decrease
 
         for(j=0;j<outputs.length;j++) {
-            sum=0.0;
-            for(k=0;k<inputs.length;k++) sum += hiddenUnits[j][k];
+            sumOfWeights=0.0;
+            for(k=0;k<inputs.length;k++) sumOfWeights += hiddenUnits[j][k];
 
             for(i=0;i<inputs.length;i++) {
-                percentageError[j][i] = hiddenUnits[j][i]/sum;
+                percentageError[j][i] = hiddenUnits[j][i]/sumOfWeights;
                 increaseByError[j][i] = percentageError[j][i]*error[j];
             }
         }
@@ -101,10 +105,18 @@ public class PerceptronLearning {
         max(expected);
         maxPos2 = maxPos;
 
-        for(int i=0;i<error.length;i++) sumError += error[i];
+        for(int i=0;i<error.length;i++) {
+        	System.out.println(error[i]);
+        	sumError += error[i];
+        }
+        System.out.println("Sum error: " + sumError);
+        System.out.println("Epislon: " + epsilon);
+        
+        if (sumError <= epsilon)  {
+        	return true;
+        } else {
+        	return false;
+        }
 
-        if (maxPos1 == maxPos2 || sumError <= epsilon) return true;
-
-        return false;
     }
 }
