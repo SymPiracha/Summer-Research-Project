@@ -1,34 +1,38 @@
-//Back propagation added which adjusts the weights of nodes.
+//Back propagation added which adjusts the weights of nodes until total error reaches epsilon 
 
 //(Excel Spreadsheet for visualization of how this works)
 
 public class PerceptronLearning {
-    double inputs[]        = {2,2,0,0};
+    double inputs[]        = {2,2,0};
     double hiddenUnits[][] = {
-            {1,0,0,0},
-            {1,0,0,0},
-            {1,1,0,0}
+            {1,0.5,2},
+            {0,1,1},
+            {3,0,0},
+            {1,1,0},
     };
     double percentageError[][] = {
-            {1,0,0,0},
-            {1,0,0,0},
-            {1,1,0,0}
+    		{1,0,0},
+            {1,0,0},
+            {1,1,0},
+            {1,1,0},
     };
     double increaseByError[][] = {
-            {1,0,0,0},
-            {1,0,0,0},
-            {1,1,0,0}
+    		{1,0,0},
+            {1,0,0},
+            {1,1,0},
+            {1,1,0},
     };
-    double outputs[]       = {0,0,0};
-    double error[]         = {0,0,0};
-    double expected[]      = {4,2,2};
-    String conclusions[]   = {"A","B","C"};
+    double outputs[]       = {0,0,0,0};
+    double error[]         = {0,0,0,0};
+    double expected[]      = {4,0,0,0};
+    String conclusions[]   = {"Box","Ball","Stripes Vertical", "Stripes Horizontal"};
 
     double maxScore;
     int maxPos;
+    double increment = 0.001;
 
     void calculate() {
-        int i,j;
+    	int i,j;
         double sum;
 
         for(j=0;j<outputs.length;j++) {
@@ -37,7 +41,6 @@ public class PerceptronLearning {
                 sum += inputs[i] * hiddenUnits[j][i];
             }
             outputs[j] = sum;
-            //System.out.println(sum);
         }
     }
 
@@ -52,6 +55,7 @@ public class PerceptronLearning {
                 maxPos = i;
             }
         }
+
     }
 
     void printResult() {
@@ -68,20 +72,26 @@ public class PerceptronLearning {
 
     void backPropagation() {
         int i, j, k;
-        double sumOfWeights; //sum for one "column"
+        double sum;
 
-        // calculate the error (expected - actual output)
+        // calculate the error
 
         for(i=0;i<outputs.length;i++) error[i] = expected[i]-outputs[i];
 
         // calculate back propagation increase/decrease
 
         for(j=0;j<outputs.length;j++) {
-            sumOfWeights=0.0;
-            for(k=0;k<inputs.length;k++) sumOfWeights += hiddenUnits[j][k];
+            sum=0.0;
+            for(k=0;k<inputs.length;k++) sum += hiddenUnits[j][k];
 
             for(i=0;i<inputs.length;i++) {
-                percentageError[j][i] = hiddenUnits[j][i]/sumOfWeights;
+                
+            	if (sum==0) {
+            		percentageError[j][i] = 1/hiddenUnits[0].length;
+            	} else {
+            		percentageError[j][i] = hiddenUnits[j][i]/sum;
+            	}
+    	
                 increaseByError[j][i] = percentageError[j][i]*error[j];
             }
         }
@@ -90,7 +100,7 @@ public class PerceptronLearning {
 
         for(j=0;j<outputs.length;j++) {
             for(i=0;i<inputs.length;i++) {
-                hiddenUnits[j][i] = hiddenUnits[j][i] * increaseByError[j][i];
+                hiddenUnits[j][i] = hiddenUnits[j][i] +  (increaseByError[j][i]*increment);
             }
         }
     }
@@ -105,18 +115,17 @@ public class PerceptronLearning {
         max(expected);
         maxPos2 = maxPos;
 
-        for(int i=0;i<error.length;i++) {
-        	System.out.println(error[i]);
-        	sumError += error[i];
-        }
-        System.out.println("Sum error: " + sumError);
-        System.out.println("Epislon: " + epsilon);
+        for(int i=0;i<error.length;i++) sumError += error[i];
+
+        System.out.println(sumError);
+        System.out.println(epsilon);
         
-        if (sumError <= epsilon)  {
+        
+        if ( (maxPos1 == maxPos2) && ( Math.abs(sumError) <= epsilon) ) {
         	return true;
-        } else {
+        }
+        else {
         	return false;
         }
-
     }
 }
