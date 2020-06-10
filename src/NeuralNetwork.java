@@ -31,22 +31,22 @@ public class NeuralNetwork {
 				 sum = sum + (inputs[j] * firstWeights[j][i]);	 
 			 }
 			 this.hiddenLayerValues[i] = sum;
-			 System.out.println(sum);
-			 System.out.println("___");
+//			 System.out.println(sum);
+//			 System.out.println("___");
 		 }	
 	 }
 	 
 	 void calculateOutput() {
-		 
+
 		 this.calculateHiddenNodes();
 		 
 		 for (int i = 0;i<outputs.length;i++) {
 			 double sum = 0;
-			 for (int j = 0; j<secondWeights.length;j++) {
+			 for (int j = 0; j<secondWeights[0].length;j++) {
 				 sum = sum + (hiddenLayerValues[j] * secondWeights[i][j]);	 
 			 }
 			 this.outputs[i] = sum;
-			 System.out.println(sum);
+//			 System.out.println(sum);
 		 }
 	 }
 	 
@@ -54,12 +54,15 @@ public class NeuralNetwork {
 		 
 		 NeuralNetwork x = new NeuralNetwork();
 		 x.calculateOutput();
-//		 for (int i  = 0; i<3;i++) {
-//			 System.out.println(x.hiddenLayerValues[i]);
-//		 }
-//		 for (int i  = 0; i<2;i++) {
-//			 System.out.println(x.outputs[i]);
-//		 }
+		 System.out.println("Hidden Layer Values: ");
+		 for (int i  = 0; i<4;i++) {
+			 System.out.print(x.hiddenLayerValues[i]+", ");
+		 }
+		 System.out.println();
+		 System.out.println("Output Layer Values: ");
+		 for (int i  = 0; i<2;i++) {
+			 System.out.print(x.outputs[i]+", ");
+		 }
 		 
 		 
 	 }
