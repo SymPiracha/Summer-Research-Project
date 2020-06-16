@@ -59,9 +59,13 @@ public class World {
     	 String old = null;
     	 for(int i=startX;i<endX;i++) {
            // add the moving text to the world
-           if (old != null) world[rowY][i-1].setText(old);
+           if (old != null) {
+        	   world[rowY][i-1].setText(old);
+           }
            old = world[rowY][i].getText();
            world[rowY][i].setText("MOVED");
+           world[rowY][i].setBackground(Color.blue);
+           
   
            // redraw the window
            grid.revalidate();
@@ -76,9 +80,12 @@ public class World {
     	 String old = null;
     	 for(int i=startY;i<endY;i++) {
            // add the moving text to the world
-           if (old != null) world[i-1][colX].setText(old);
+           if (old != null) {
+        	   world[i-1][colX].setText(old);
+           }
            old = world[i][colX].getText();
            world[i][colX].setText("MOVED");
+           world[i][colX].setBackground(Color.yellow);
   
            // redraw the window
            grid.revalidate();
