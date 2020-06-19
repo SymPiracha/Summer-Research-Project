@@ -10,13 +10,13 @@
 //The output from the Green and Pink Neural Network gets fed into the Blue Neural Network which determines a final conclusion
 public class NNTree {
 
-	double yellowInputs[] = {0,0,0,0.33,0.2}; //Left 90,Left 45, Front, Right 45, Right 90
+	double yellowInputs[] = {0,0,0.33,0.2}; //Left 90,Left 45, Right 45, Right 90
 	double orangeInputs[] = {0.5,0.5,0.5}; //time 0, time 1 , time 2
 	double pinkInputs[] = {0.6,0.5}; ////time 0, time 1 
 	
 	double yellowHiddenUnits[][] = {
-			{0.8,0.2,0,0,0},
-			{0,0,0,0.2,0.8}
+			{0.8,0.2,0,0},
+			{0,0,0.2,0.8}
 	};
 	double orangeHiddenUnits[][] = {
 			{0.45,0.45,0},
@@ -38,18 +38,18 @@ public class NNTree {
 	
 	double greenInputs[] = {0,0,0,0};
 	double greenHiddenUnits[][] = {
-			{0,0,0,0},
-			{0,0,0,0},
-			{0,0,0,0},
-			{0,0,0,0}
+			{0.5,0,1,0},
+			{0.5,0,0,1},
+			{0,0.5,1,0},
+			{0,0.5,0,1}
 	};
 	double greenOutputs[] = {0.45,0.5,0.56,0.613};
 	
 	double blueInputs[] = {0,0,0,0,0,0};
 	double blueHiddenUnits[][] = {
-			{0,0,0,0,0,0},
-			{0,0,0,0,0,0},
-			{0,0,0,0,0,0}
+			{0,0.3,0,0,0,0.5},
+			{0,0,0,0,0.3,0.5},
+			{0.3,0,0.3,0,1,0}
 	};
 	double blueOutputs[] = {0,0,0};
 	String blueConclusion[] = {"Turn right","Turn left","Stop"};
@@ -75,7 +75,6 @@ public class NNTree {
             }
             else if(color.equalsIgnoreCase("green")){
             	this.greenOutputs[j] = sum;
-            	System.out.println("we are here: "+sum);
             }
             else if(color.equalsIgnoreCase("blue")){
             	this.blueOutputs[j] = sum;
@@ -91,27 +90,26 @@ public class NNTree {
 		this.calculate("pink",this.pinkInputs, this.pinkHiddenUnits, this.pinkOutputs);
 		this.temperatureFunction();
 		this.combineOutputsToGetGreenInput();
-		System.out.println(this.greenInputs[0]);
-		System.out.println(this.greenInputs[1]);
-		System.out.println(this.greenInputs[2]);
-		System.out.println(this.greenInputs[3]);
 		this.calculate("green",this.greenInputs, this.greenHiddenUnits, this.greenOutputs);
-		System.out.println(this.greenOutputs[0]);
-		System.out.println(this.greenOutputs[1]);
-		System.out.println(this.greenOutputs[2]);
-		System.out.println(this.greenOutputs[3]);
-//		this.combineOutputsToGetBlueInput();
-//		this.calculate("blue",this.blueInputs, this.blueHiddenUnits, this.blueOutputs);
-		
-		
-//		System.out.println(this.yellowOutputs[0]);
-//		System.out.println(this.orangeOutputs[0]);
-//		System.out.println(this.pinkOutputs[0]);
-//		System.out.println(this.greenOutputs[0]);
-//		System.out.println(this.blueOutputs[0]);
+		this.combineOutputsToGetBlueInput();
+		this.calculate("blue",this.blueInputs, this.blueHiddenUnits, this.blueOutputs);
+		this.displayResults();
 		
 	}
 	
+	//checks max of outputs and provides result with conclusion
+	void displayResults() {
+		double max = 0.0;
+		String conclusion = "";
+		for (int i = 0;i<this.blueOutputs.length;i++) {
+			if (blueOutputs[i]>=max) {
+				max = blueOutputs[i];
+				conclusion = blueConclusion[i];
+			}
+		}
+		System.out.printf("The result of the Neural Network Tree after the calculations from the inputs is: %s",conclusion);
+	}
+
 	//temperature functions checks output of the pink network, if it is overheating it makes that value 1 and the other 0. Vice Versa if it is at optimal temperature
 	void temperatureFunction() {
 		if (this.pinkOutputs[0]>=this.pinkOutputs[1]) {

@@ -3,7 +3,7 @@
 //(Excel Spreadsheet for visualization of how this works)
 
 public class PerceptronLearning {
-    double inputs[]        = {2,2,0};
+    double inputs[]        = {2,2,0}; //2,2,0
     double hiddenUnits[][] = {
             {1,0.5,2},
             {0,1,1},
@@ -24,8 +24,8 @@ public class PerceptronLearning {
     };
     double outputs[]       = {0,0,0,0};
     double error[]         = {0,0,0,0};
-    double expected[]      = {4,0,0,0};
-    String conclusions[]   = {"Box","Ball","Stripes Vertical", "Stripes Horizontal"};
+    double expected[]      = {4,0,0,0}; //4,0,0,0
+    String conclusions[]   = {"A","B","C","D"}; //box,ball V Stripe, H stripes
 
     double maxScore;
     int maxPos;
